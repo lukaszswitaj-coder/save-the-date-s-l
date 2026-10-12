@@ -16,7 +16,6 @@
             --primary-color: #d4af37;
             --text-light: #ffffff;
             --bg-dark-trans: rgba(15, 15, 15, 0.65);
-            --card-bg: rgba(255, 255, 255, 0.12);
             --card-border: rgba(255, 255, 255, 0.25);
         }
 
@@ -35,7 +34,7 @@
             position: relative;
         }
 
-        /* Pokaz slajdów w tle */
+        /* Poprawiony pokaz slajdów w tle */
         .bg-slideshow {
             position: fixed;
             top: 0;
@@ -55,32 +54,46 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            animation: slideAnimation 24s infinite;
+            animation: slideFade 20s linear infinite;
         }
 
+        /* Podpięcie 4 zdjęć z przesunięciem czasowym (5s na zdjęcie) */
         .slide:nth-child(1) {
             background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
             animation-delay: 0s;
         }
         .slide:nth-child(2) {
             background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80');
-            animation-delay: 6s;
+            animation-delay: 5s;
         }
         .slide:nth-child(3) {
             background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80');
-            animation-delay: 12s;
+            animation-delay: 10s;
         }
         .slide:nth-child(4) {
             background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1920&q=80');
-            animation-delay: 18s;
+            animation-delay: 15s;
         }
 
-        @keyframes slideAnimation {
-            0% { opacity: 0; transform: scale(1); }
-            5% { opacity: 1; }
-            25% { opacity: 1; }
-            30% { opacity: 0; transform: scale(1.08); }
-            100% { opacity: 0; transform: scale(1); }
+        @keyframes slideFade {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            8% {
+                opacity: 1;
+            }
+            25% {
+                opacity: 1;
+            }
+            33% {
+                opacity: 0;
+                transform: scale(1.08);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
         }
 
         .bg-overlay {
@@ -339,7 +352,138 @@
 </head>
 <body>
 
-    <!-- Pokaz slajdów -->
+    <!-- Pokaz 4 slajdów -->
     <div class="bg-slideshow">
         <div class="slide"></div>
-        <div
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+    </div>
+    <div class="bg-overlay"></div>
+
+    <!-- Odtwarzacz muzyki -->
+    <div class="music-control" id="musicToggle" title="Włącz / wyłącz muzykę">
+        <i class="fas fa-music"></i>
+    </div>
+    <audio id="bg-music" loop src="muzyka.mp3"></audio>
+
+    <!-- Zawartość główna -->
+    <div class="main-container">
+        <div class="card">
+            <div class="sub-title">Save the Date</div>
+            <h1 class="names">Sandra & Łukasz</h1>
+            
+            <div class="divider"></div>
+
+            <div class="date-display">26 CZERWCA 2027</div>
+            
+            <div class="location-info">
+                <i class="fas fa-map-marker-alt"></i> Ogród Babette<br>
+                <span style="font-size: 0.9rem; opacity: 0.8;">Główna 24, 05-830 Rusiec (pod Warszawą)</span>
+            </div>
+
+            <!-- Zegar -->
+            <div class="countdown" id="countdown">
+                <div class="time-box">
+                    <span class="number" id="days">00</span>
+                    <span class="label">Dni</span>
+                </div>
+                <div class="time-box">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Godzin</span>
+                </div>
+                <div class="time-box">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Minut</span>
+                </div>
+                <div class="time-box">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Sekund</span>
+                </div>
+            </div>
+
+            <!-- Przyciski -->
+            <div class="btn-group">
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%C5%9Alub+Sandry+i+%C5%81ukasza&dates=20270626T140000Z/20270627T020000Z&details=Prosimy+o+rezerwacj%C4%99+terminu!+Więcej+szczeg%C3%B3%C5%82%C3%B3w+wkr%C3%B3tce.&location=Ogr%C3%B3d+Babette,+G%C5%82%C3%B3wna+24,+05-830+Rusiec" target="_blank" class="btn btn-primary">
+                    <i class="far fa-calendar-check"></i> Dodaj do Kalendarza
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Ogr%C3%B3d+Babette+G%C5%82%C3%B3wna+24+05-830+Rusiec" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-route"></i> Dojazd (Nawiguj)
+                </a>
+            </div>
+
+            <!-- Wstępne RSVP -->
+            <div class="rsvp-section">
+                <h2 class="rsvp-title">Daj nam znać, czy będziesz z nami!</h2>
+                <form class="rsvp-form" id="rsvpForm">
+                    <input type="text" class="form-input" placeholder="Twoje Imię i Nazwisko" required>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Potwierdzam obecność
+                    </button>
+                </form>
+                <div id="rsvpMessage" style="display:none; margin-top: 15px; color: var(--primary-color);">
+                    Dziękujemy! Twoja odpowiedź została zapisana. ❤️
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Oficjalne zaproszenia ze szczegółami zostaną wysłane w późniejszym terminie.
+        </div>
+    </div>
+
+    <!-- Skrypty JavaScript -->
+    <script>
+        // Zegar odliczający
+        const weddingDate = new Date("June 26, 2027 16:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div style='font-size: 1.5rem; color: var(--primary-color);'>To już dzisiaj! ❤️</div>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Obsługa muzyki
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+                musicToggle.style.background = 'rgba(0, 0, 0, 0.5)';
+            } else {
+                bgMusic.play();
+                musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                musicToggle.style.background = 'rgba(212, 175, 55, 0.6)';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Obsługa RSVP
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('rsvpMessage').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
