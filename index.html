@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save the Date – Sandra & Łukasz</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #d4af37;
+            --text-light: #ffffff;
+            --bg-dark-trans: rgba(15, 15, 15, 0.65);
+            --card-bg: rgba(255, 255, 255, 0.12);
+            --card-border: rgba(255, 255, 255, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
+            background-color: #0b0b0b;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Pokaz slajdów w tle */
+        .bg-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: slideAnimation 24s infinite;
+        }
+
+        .slide:nth-child(1) {
+            background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 0s;
+        }
+        .slide:nth-child(2) {
+            background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 6s;
+        }
+        .slide:nth-child(3) {
+            background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 12s;
+        }
+        .slide:nth-child(4) {
+            background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1920&q=80');
+            animation-delay: 18s;
+        }
+
+        @keyframes slideAnimation {
+            0% { opacity: 0; transform: scale(1); }
+            5% { opacity: 1; }
+            25% { opacity: 1; }
+            30% { opacity: 0; transform: scale(1.08); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.75) 100%);
+            z-index: -1;
+        }
+
+        /* Muzyka w tle */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.4);
+        }
+
+        .music-control i {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        /* Główny kontener */
+        .main-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: var(--bg-dark-trans);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 50px 30px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+
+        .sub-title {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: var(--primary-color);
+            margin: 25px auto;
+        }
+
+        .date-display {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .location-info {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+        }
+
+        .location-info i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        /* Zegar odliczający */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 15px 10px;
+            min-width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .time-box .number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .time-box .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 6px;
+            opacity: 0.8;
+        }
+
+        /* Przyciski Akcji */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #e5be48;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Sekcja RSVP */
+        .rsvp-section {
+            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rsvp-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-note {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .names { font-size: 2.8rem; }
+            .date-display { font-size: 1.8rem; }
+            .card { padding: 35px 20px; }
+            .time-box { min-width: 65px; padding: 10px 5px; }
+            .time-box .number { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pokaz slajdów -->
+    <div class="bg-slideshow">
+        <div class="slide"></div>
+        <div
