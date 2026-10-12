@@ -257,22 +257,23 @@
             margin-right: 6px;
         }
 
-        /* Zegar odliczający (3 puszki: Dni, Godziny, Minuty) */
+        /* Zegar odliczający (4 kafelki: Dni, Godziny, Minuty, Sekundy) */
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             margin: 30px 0;
             width: 100%;
+            flex-wrap: nowrap; /* Wymusza 1 wiersz */
         }
 
         .time-box {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 14px;
-            padding: 14px 8px;
+            border-radius: 12px;
+            padding: 12px 6px;
             flex: 1;
-            max-width: 105px;
+            min-width: 0; /* Zapobiega wypychaniu wiersza na mobilkach */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -280,7 +281,7 @@
 
         .time-box .number {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             font-weight: 600;
             color: var(--primary-color);
             line-height: 1;
@@ -289,9 +290,10 @@
         .time-box .label {
             font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-top: 6px;
+            letter-spacing: 1px;
+            margin-top: 5px;
             opacity: 0.85;
+            white-space: nowrap;
         }
 
         /* Przyciski Akcji */
@@ -392,14 +394,19 @@
             margin-top: 10px;
         }
 
+        /* Responsywność dla smartfonów */
         @media (max-width: 600px) {
             .announce-title { font-size: 1.8rem; letter-spacing: 4px; }
-            .names { font-size: 2.8rem; }
-            .date-display { font-size: 1.7rem; }
-            .card { padding: 35px 18px; }
-            .time-box { padding: 10px 4px; }
-            .time-box .number { font-size: 1.75rem; }
-            .intro-title { font-size: 1.9rem; }
+            .names { font-size: 2.7rem; }
+            .date-display { font-size: 1.6rem; }
+            .card { padding: 30px 14px; }
+            .intro-title { font-size: 1.8rem; }
+
+            /* Optymalizacja zegara na bardzo wąskich ekranach */
+            .countdown { gap: 6px; }
+            .time-box { padding: 8px 3px; border-radius: 10px; }
+            .time-box .number { font-size: 1.45rem; }
+            .time-box .label { font-size: 0.55rem; letter-spacing: 0.5px; }
         }
     </style>
 </head>
@@ -435,7 +442,6 @@
     <!-- Zawartość Główna Karty -->
     <div class="main-container">
         <div class="card">
-            <!-- NOWY DUŻY NAPIS -->
             <div class="announce-title">Pobieramy się!</div>
             <div class="sub-title">Save the Date</div>
 
@@ -450,7 +456,7 @@
                 <span style="font-size: 0.88rem; opacity: 0.85;">Główna 24, 05-830 Rusiec (pod Warszawą)</span>
             </div>
 
-            <!-- Zegar Odliczający (Tylko Dni, Godziny, Minuty) -->
+            <!-- Zegar Odliczający (Dni, Godziny, Minuty, Sekundy) -->
             <div class="countdown" id="countdown">
                 <div class="time-box">
                     <span class="number" id="days">00</span>
@@ -464,15 +470,19 @@
                     <span class="number" id="minutes">00</span>
                     <span class="label">Minut</span>
                 </div>
+                <div class="time-box">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Sekund</span>
+                </div>
             </div>
 
             <!-- Przyciski Akcji -->
             <div class="btn-group">
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%C5%9Alub+Sandry+i+%C5%81ukasza&dates=20270626T140000Z/20270627T020000Z&details=Prosimy+o+rezerwacj%C4%99+terminu!+Wi%C4%99cej+szczeg%C3%B3%C5%82%C3%B3w+wkr%C3%B3tce.&location=Ogr%C3%B3d+Babette,+G%C5%82%C3%B3wna+24,+05-830+Rusiec" target="_blank" class="btn btn-primary">
-                    <i class="far fa-calendar-check"></i> Kalendarz Google
+                    <i class="far fa-calendar-check"></i> Dodaj do Kalendarza
                 </a>
                 <a href="https://www.google.com/maps/search/?api=1&query=Ogr%C3%B3d+Babette+G%C5%82%C3%B3wna+24+05-830+Rusiec" target="_blank" class="btn btn-secondary">
-                    <i class="fas fa-route"></i> Nawiguj do Sali
+                    <i class="fas fa-route"></i> Dojazd (Nawiguj)
                 </a>
             </div>
 
@@ -501,17 +511,16 @@
         const musicToggle = document.getElementById('musicToggle');
         let isPlaying = false;
 
-        // 1. Otwieranie zaproszenia z automatycznym włączeniem muzyki
+        // 1. Otwieranie zaproszenia z automatycznym uruchomieniem muzyki po geście
         function openInvitation() {
             document.getElementById('intro-screen').classList.add('hidden');
             
-            // Próba odtworzenia muzyki po gesty użytkownika
             bgMusic.play().then(() => {
                 isPlaying = true;
                 musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
                 musicToggle.style.background = 'rgba(212, 175, 55, 0.7)';
             }).catch(err => {
-                console.log("Muzyka zablokowana lub brak pliku muzyka.m4a:", err);
+                console.log("Muzyka zablokowana lub brak pliku muzycznego:", err);
             });
         }
 
@@ -544,7 +553,7 @@
         }
         setInterval(nextSlide, 5000);
 
-        // 4. Odliczanie (Tylko Dni, Godziny, Minuty)
+        // 4. Odliczanie z Sekundami
         const weddingDate = new Date("June 26, 2027 16:00:00").getTime();
 
         function updateCountdown() {
@@ -559,10 +568,12 @@
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById("days").innerText = days < 10 ? "0" + days : days;
             document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
             document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
         }
 
         setInterval(updateCountdown, 1000);
