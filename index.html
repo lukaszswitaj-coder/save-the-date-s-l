@@ -345,48 +345,6 @@
             transform: translateY(-2px);
         }
 
-        /* RSVP */
-        .rsvp-section {
-            margin-top: 20px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .rsvp-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.7rem;
-            margin-bottom: 15px;
-        }
-
-        .rsvp-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-width: 420px;
-            margin: 0 auto;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
-            transition: border-color 0.3s;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
         .footer-note {
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.5);
@@ -419,12 +377,13 @@
         <button class="btn-intro" onclick="openInvitation()">Kliknij tutaj</button>
     </div>
 
-    <!-- Pokaz 4 slajdów w tle -->
+    <!-- Pokaz 5 zdjęć w tle -->
     <div class="bg-slideshow">
-        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="slide active" style="background-image: url('images/photo-1.jpg');"></div>
+        <div class="slide" style="background-image: url('images/photo-2.jpg');"></div>
+        <div class="slide" style="background-image: url('images/photo-3.jpg');"></div>
+        <div class="slide" style="background-image: url('images/photo-4.jpg');"></div>
+        <div class="slide" style="background-image: url('images/photo-5.jpg');"></div>
     </div>
     <div class="bg-overlay"></div>
 
@@ -486,19 +445,6 @@
                 </a>
             </div>
 
-            <!-- Wstępne RSVP -->
-            <div class="rsvp-section">
-                <h2 class="rsvp-title">Daj nam znać, czy będziesz z nami!</h2>
-                <form class="rsvp-form" id="rsvpForm">
-                    <input type="text" class="form-input" placeholder="Twoje Imię i Nazwisko" required>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-paper-plane"></i> Potwierdzam obecność
-                    </button>
-                </form>
-                <div id="rsvpMessage" style="display:none; margin-top: 15px; color: var(--primary-color); font-weight: 500;">
-                    Dziękujemy! Twoja odpowiedź została zapisana. ❤️
-                </div>
-            </div>
         </div>
 
         <div class="footer-note">
@@ -579,12 +525,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // 5. Obsługa RSVP
-        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('rsvpMessage').style.display = 'block';
-        });
     </script>
 </body>
 </html>
