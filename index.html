@@ -59,30 +59,39 @@
             transform: scale(1);
         }
 
-        .slide.portrait {
+        .slide.square {
             background-image: none;
         }
 
-        .slide.portrait::before {
+        .slide.square::before {
             content: "";
             position: absolute;
-            inset: -24px;
+            inset: -42px;
             z-index: 0;
             background-image: var(--slide-photo);
             background-size: cover;
             background-position: center;
-            filter: blur(22px) brightness(0.5);
-            transform: scale(1.08);
+            filter: blur(38px) brightness(0.72) saturate(1.12);
+            transform: scale(1.1);
         }
 
-        .portrait-photo {
+        .square-frame {
             position: absolute;
-            inset: 0;
             z-index: 1;
+            top: 50%;
+            left: 50%;
+            width: min(100vw, 100vh);
+            height: min(100vw, 100vh);
+            transform: translate(-50%, -50%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+        }
+
+        .square-frame img {
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             object-position: center;
         }
 
@@ -91,7 +100,7 @@
             transform: scale(1.06);
         }
 
-        .slide.portrait.active {
+        .slide.square.active {
             transform: none;
         }
 
@@ -101,7 +110,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.62) 100%);
             z-index: -1;
         }
 
@@ -397,6 +406,15 @@
             .time-box .number { font-size: 1.45rem; }
             .time-box .label { font-size: 0.55rem; letter-spacing: 0.5px; }
         }
+
+        @media (max-aspect-ratio: 1/1) {
+            .square-frame {
+                width: 100vw;
+                height: 100vh;
+                -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
+                mask-image: linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -408,19 +426,20 @@
         <button class="btn-intro" onclick="openInvitation()">Kliknij tutaj</button>
     </div>
 
-    <!-- Pokaz 5 zdjęć w tle -->
+    <!-- Pokaz 4 kwadratowych zdjęć w tle -->
     <div class="bg-slideshow">
-        <div class="slide portrait active" style="--slide-photo: url('images/photo-1.jpg');">
-            <img class="portrait-photo" src="images/photo-1.jpg" alt="" aria-hidden="true">
+        <div class="slide square active" style="--slide-photo: url('images/photo-1.jpg');">
+            <div class="square-frame"><img src="images/photo-1.jpg" alt="" aria-hidden="true"></div>
         </div>
-        <div class="slide portrait" style="--slide-photo: url('images/photo-2.jpg');">
-            <img class="portrait-photo" src="images/photo-2.jpg" alt="" aria-hidden="true">
+        <div class="slide square" style="--slide-photo: url('images/photo-2.jpg');">
+            <div class="square-frame"><img src="images/photo-2.jpg" alt="" aria-hidden="true"></div>
         </div>
-        <div class="slide" style="background-image: url('images/photo-3.jpg');"></div>
-        <div class="slide portrait" style="--slide-photo: url('images/photo-4.jpg');">
-            <img class="portrait-photo" src="images/photo-4.jpg" alt="" aria-hidden="true">
+        <div class="slide square" style="--slide-photo: url('images/photo-3.jpg');">
+            <div class="square-frame"><img src="images/photo-3.jpg" alt="" aria-hidden="true"></div>
         </div>
-        <div class="slide" style="background-image: url('images/photo-5.jpg');"></div>
+        <div class="slide square" style="--slide-photo: url('images/photo-4.jpg');">
+            <div class="square-frame"><img src="images/photo-4.jpg" alt="" aria-hidden="true"></div>
+        </div>
     </div>
     <div class="bg-overlay"></div>
 
