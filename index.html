@@ -59,6 +59,10 @@
             transform: scale(1);
         }
 
+        .slide.portrait {
+            background-position: center top;
+        }
+
         .slide.active {
             opacity: 1;
             transform: scale(1.06);
@@ -379,10 +383,10 @@
 
     <!-- Pokaz 5 zdjęć w tle -->
     <div class="bg-slideshow">
-        <div class="slide active" style="background-image: url('images/photo-1.jpg');"></div>
-        <div class="slide" style="background-image: url('images/photo-2.jpg');"></div>
+        <div class="slide portrait active" style="background-image: url('images/photo-1.jpg');"></div>
+        <div class="slide portrait" style="background-image: url('images/photo-2.jpg');"></div>
         <div class="slide" style="background-image: url('images/photo-3.jpg');"></div>
-        <div class="slide" style="background-image: url('images/photo-4.jpg');"></div>
+        <div class="slide portrait" style="background-image: url('images/photo-4.jpg');"></div>
         <div class="slide" style="background-image: url('images/photo-5.jpg');"></div>
     </div>
     <div class="bg-overlay"></div>
